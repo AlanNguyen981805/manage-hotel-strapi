@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_routes",
+  "info": {
+    "singularName": "service-route",
+    "pluralName": "service-routes",
+    "displayName": "service_route",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "location_code": {
+      "type": "string",
+      "required": true
+    },
+    "service_code": {
+      "type": "string",
+      "required": true
+    },
+    "service_desc": {
+      "type": "string"
+    },
+    "service_price": {
+      "type": "decimal"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_companies",
+  "info": {
+    "singularName": "service-company",
+    "pluralName": "service-companies",
+    "displayName": "service_company"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "company_code": {
+      "type": "string",
+      "required": true
+    },
+    "service_code": {
+      "type": "string",
+      "required": true
+    },
+    "service_desc": {
+      "type": "string"
+    },
+    "service_price": {
+      "type": "decimal"
+    }
+  }
+}

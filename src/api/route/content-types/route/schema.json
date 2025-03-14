@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "routes",
+  "info": {
+    "singularName": "route",
+    "pluralName": "routes",
+    "displayName": "route",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "location_code": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "route_code": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "route_desc": {
+      "type": "string"
+    },
+    "route_text": {
+      "type": "string"
+    }
+  }
+}

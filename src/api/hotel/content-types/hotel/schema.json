@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hotels",
+  "info": {
+    "singularName": "hotel",
+    "pluralName": "hotels",
+    "displayName": "hotel",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "location_code": {
+      "type": "string",
+      "required": true
+    },
+    "hotel_rank": {
+      "type": "string",
+      "required": true
+    },
+    "hotel_code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "room_price": {
+      "type": "decimal"
+    },
+    "extra_price": {
+      "type": "decimal"
+    },
+    "hotel_name": {
+      "type": "string"
+    },
+    "hotel_type": {
+      "type": "string",
+      "required": true
+    },
+    "expire_date": {
+      "type": "date"
+    }
+  }
+}

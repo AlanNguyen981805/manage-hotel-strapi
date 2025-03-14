@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "locations",
+  "info": {
+    "singularName": "location",
+    "pluralName": "locations",
+    "displayName": "location"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "company_code": {
+      "type": "string",
+      "required": true
+    },
+    "location_code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "location_name": {
+      "type": "string"
+    }
+  }
+}

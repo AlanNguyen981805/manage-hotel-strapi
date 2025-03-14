@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "companies",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "company",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "company_code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "mark_up": {
+      "type": "decimal"
+    },
+    "company_desc": {
+      "type": "string"
+    }
+  }
+}
