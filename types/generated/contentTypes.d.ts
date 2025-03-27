@@ -386,10 +386,11 @@ export interface ApiCarCar extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    id_car: Schema.Attribute.UID;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::car.car'> &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String & Schema.Attribute.Required;
+    location: Schema.Attribute.Relation<'manyToOne', 'api::location.location'>;
     publishedAt: Schema.Attribute.DateTime;
     type_car: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -410,6 +411,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    cars: Schema.Attribute.Relation<'oneToMany', 'api::car.car'>;
     company_code: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -423,7 +425,87 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
       'api::company.company'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.Relation<'manyToOne', 'api::location.location'>;
     mark_up: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    service_companies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-company.service-company'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHistoryHistory extends Struct.CollectionTypeSchema {
+  collectionName: 'histories';
+  info: {
+    description: '';
+    displayName: 'History';
+    pluralName: 'histories';
+    singularName: 'history';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    code: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    history: Schema.Attribute.JSON;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::history.history'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    time_search: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_history: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-history.user-history'
+    >;
+  };
+}
+
+export interface ApiHotelTypeHotelType extends Struct.CollectionTypeSchema {
+  collectionName: 'hotel_types';
+  info: {
+    description: '';
+    displayName: 'hotel-type';
+    pluralName: 'hotel-types';
+    singularName: 'hotel-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hotel: Schema.Attribute.Relation<'oneToOne', 'api::hotel.hotel'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-type.hotel-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    price_hotel: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::price-hotel.price-hotel'
+    >;
+    price_hotels: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::price-hotel.price-hotel'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -451,14 +533,20 @@ export interface ApiHotelHotel extends Struct.CollectionTypeSchema {
     hotel_code: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    hotel_name: Schema.Attribute.String;
-    hotel_rank: Schema.Attribute.String & Schema.Attribute.Required;
-    hotel_type: Schema.Attribute.String & Schema.Attribute.Required;
+    hotel_name: Schema.Attribute.String & Schema.Attribute.Required;
+    hotel_type: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::hotel-type.hotel-type'
+    >;
+    hotel_types: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-type.hotel-type'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::hotel.hotel'> &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    rank: Schema.Attribute.Integer;
     room_price: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -469,6 +557,7 @@ export interface ApiHotelHotel extends Struct.CollectionTypeSchema {
 export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
   collectionName: 'locations';
   info: {
+    description: '';
     displayName: 'location';
     pluralName: 'locations';
     singularName: 'location';
@@ -477,21 +566,61 @@ export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    company_code: Schema.Attribute.String & Schema.Attribute.Required;
+    cars: Schema.Attribute.Relation<'oneToMany', 'api::car.car'>;
+    companies: Schema.Attribute.Relation<'oneToMany', 'api::company.company'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    hotels: Schema.Attribute.Relation<'oneToMany', 'api::hotel.hotel'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::location.location'
     > &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
     location_name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    routes: Schema.Attribute.Relation<'oneToMany', 'api::route.route'>;
+    service_routes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-route.service-route'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPriceHotelPriceHotel extends Struct.CollectionTypeSchema {
+  collectionName: 'price_hotels';
+  info: {
+    description: '';
+    displayName: 'price-hotel';
+    pluralName: 'price-hotels';
+    singularName: 'price-hotel';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    end_date: Schema.Attribute.DateTime;
+    hotel_type: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::hotel-type.hotel-type'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::price-hotel.price-hotel'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    price: Schema.Attribute.BigInteger;
+    publishedAt: Schema.Attribute.DateTime;
+    start_date: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -510,19 +639,19 @@ export interface ApiRouteRoute extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    code: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    desc: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::route.route'> &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String & Schema.Attribute.Required;
+    location: Schema.Attribute.Relation<'manyToOne', 'api::location.location'>;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    route_code: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    route_desc: Schema.Attribute.String;
-    route_text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -533,7 +662,8 @@ export interface ApiServiceCompanyServiceCompany
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_companies';
   info: {
-    displayName: 'service_company';
+    description: '';
+    displayName: 'service-company';
     pluralName: 'service-companies';
     singularName: 'service-company';
   };
@@ -541,7 +671,6 @@ export interface ApiServiceCompanyServiceCompany
     draftAndPublish: true;
   };
   attributes: {
-    company_code: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -566,7 +695,7 @@ export interface ApiServiceRouteServiceRoute
   collectionName: 'service_routes';
   info: {
     description: '';
-    displayName: 'service_route';
+    displayName: 'service-route';
     pluralName: 'service-routes';
     singularName: 'service-route';
   };
@@ -583,11 +712,44 @@ export interface ApiServiceRouteServiceRoute
       'api::service-route.service-route'
     > &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String & Schema.Attribute.Required;
+    location: Schema.Attribute.Relation<'manyToOne', 'api::location.location'>;
     publishedAt: Schema.Attribute.DateTime;
     service_code: Schema.Attribute.String & Schema.Attribute.Required;
     service_desc: Schema.Attribute.String;
     service_price: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserHistoryUserHistory extends Struct.CollectionTypeSchema {
+  collectionName: 'user_histories';
+  info: {
+    description: '';
+    displayName: 'User-History';
+    pluralName: 'user-histories';
+    singularName: 'user-history';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    histories: Schema.Attribute.Relation<'oneToMany', 'api::history.history'>;
+    history: Schema.Attribute.Relation<'oneToOne', 'api::history.history'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-history.user-history'
+    > &
+      Schema.Attribute.Private;
+    name_user: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1105,11 +1267,15 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::car.car': ApiCarCar;
       'api::company.company': ApiCompanyCompany;
+      'api::history.history': ApiHistoryHistory;
+      'api::hotel-type.hotel-type': ApiHotelTypeHotelType;
       'api::hotel.hotel': ApiHotelHotel;
       'api::location.location': ApiLocationLocation;
+      'api::price-hotel.price-hotel': ApiPriceHotelPriceHotel;
       'api::route.route': ApiRouteRoute;
       'api::service-company.service-company': ApiServiceCompanyServiceCompany;
       'api::service-route.service-route': ApiServiceRouteServiceRoute;
+      'api::user-history.user-history': ApiUserHistoryUserHistory;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "histories",
+  "info": {
+    "singularName": "history",
+    "pluralName": "histories",
+    "displayName": "History",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "time_search": {
+      "type": "datetime"
+    },
+    "history": {
+      "type": "json"
+    },
+    "user_history": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-history.user-history",
+      "inversedBy": "history"
+    }
+  }
+}

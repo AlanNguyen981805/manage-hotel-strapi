@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_histories",
+  "info": {
+    "singularName": "user-history",
+    "pluralName": "user-histories",
+    "displayName": "User-History",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name_user": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::history.history"
+    },
+    "history": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::history.history",
+      "mappedBy": "user_history"
+    }
+  }
+}

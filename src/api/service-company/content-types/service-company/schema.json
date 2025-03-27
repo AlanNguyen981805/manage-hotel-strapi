@@ -4,16 +4,13 @@
   "info": {
     "singularName": "service-company",
     "pluralName": "service-companies",
-    "displayName": "service_company"
+    "displayName": "service-company",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "company_code": {
-      "type": "string",
-      "required": true
-    },
     "service_code": {
       "type": "string",
       "required": true

@@ -21,6 +21,22 @@
     },
     "company_desc": {
       "type": "string"
+    },
+    "cars": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::car.car"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "companies"
+    },
+    "service_companies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-company.service-company"
     }
   }
 }

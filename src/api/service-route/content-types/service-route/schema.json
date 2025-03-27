@@ -4,17 +4,13 @@
   "info": {
     "singularName": "service-route",
     "pluralName": "service-routes",
-    "displayName": "service_route",
+    "displayName": "service-route",
     "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "location_code": {
-      "type": "string",
-      "required": true
-    },
     "service_code": {
       "type": "string",
       "required": true
@@ -24,6 +20,12 @@
     },
     "service_price": {
       "type": "decimal"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "service_routes"
     }
   }
 }

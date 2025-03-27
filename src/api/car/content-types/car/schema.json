@@ -11,10 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "location_code": {
-      "type": "string",
-      "required": true
-    },
     "type_car": {
       "type": "string",
       "required": true
@@ -25,6 +21,15 @@
     "car_code": {
       "type": "string",
       "required": true
+    },
+    "id_car": {
+      "type": "uid"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "cars"
     }
   }
 }

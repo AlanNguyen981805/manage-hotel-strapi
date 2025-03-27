@@ -11,14 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "location_code": {
-      "type": "string",
-      "required": true
-    },
-    "hotel_rank": {
-      "type": "string",
-      "required": true
-    },
     "hotel_code": {
       "type": "string",
       "required": true,
@@ -31,14 +23,26 @@
       "type": "decimal"
     },
     "hotel_name": {
-      "type": "string"
-    },
-    "hotel_type": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": false
     },
     "expire_date": {
       "type": "date"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "hotel_types": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hotel-type.hotel-type"
+    },
+    "hotel_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::hotel-type.hotel-type",
+      "mappedBy": "hotel"
     }
   }
 }

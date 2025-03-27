@@ -11,21 +11,22 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "location_code": {
-      "type": "string",
-      "required": true,
-      "unique": false
-    },
-    "route_code": {
+    "code": {
       "type": "string",
       "unique": true,
       "required": true
     },
-    "route_desc": {
+    "desc": {
       "type": "string"
     },
-    "route_text": {
+    "name": {
       "type": "string"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "routes"
     }
   }
 }

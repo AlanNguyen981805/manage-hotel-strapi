@@ -4,4 +4,7 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  settings: {
+    timezone: 'Asia/Ho_Chi_Minh',
+  }
 });

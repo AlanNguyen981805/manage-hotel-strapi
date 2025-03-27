@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "price_hotels",
+  "info": {
+    "singularName": "price-hotel",
+    "pluralName": "price-hotels",
+    "displayName": "price-hotel",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "start_date": {
+      "type": "datetime"
+    },
+    "end_date": {
+      "type": "datetime"
+    },
+    "price": {
+      "type": "biginteger"
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "hotel_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::hotel-type.hotel-type",
+      "inversedBy": "price_hotel"
+    }
+  }
+}

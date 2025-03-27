@@ -4,23 +4,44 @@
   "info": {
     "singularName": "location",
     "pluralName": "locations",
-    "displayName": "location"
+    "displayName": "location",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "company_code": {
-      "type": "string",
-      "required": true
-    },
-    "location_code": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
     "location_name": {
       "type": "string"
+    },
+    "companies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company.company",
+      "mappedBy": "location"
+    },
+    "hotels": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hotel.hotel"
+    },
+    "routes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::route.route",
+      "mappedBy": "location"
+    },
+    "service_routes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-route.service-route",
+      "mappedBy": "location"
+    },
+    "cars": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::car.car",
+      "mappedBy": "location"
     }
   }
 }
