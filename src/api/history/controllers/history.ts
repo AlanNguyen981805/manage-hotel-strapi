@@ -13,9 +13,9 @@ export default factories.createCoreController(
         const { code, history, time_search, users_permissions_user } = data;
         // Generate code in format: 237 - 250525 - 142 PAX (order number - start date - number of passengers)
 
-        // Get current date in YYMMDD format
+        // Get current date in DDMMYY format
         const today = new Date();
-        const dateFormatted = `${today.getFullYear().toString().slice(-2)}${(today.getMonth() + 1).toString().padStart(2, "0")}${today.getDate().toString().padStart(2, "0")}`;
+        const dateFormatted = `${today.getDate().toString().padStart(2, "0")}${(today.getMonth() + 1).toString().padStart(2, "0")}${today.getFullYear().toString().slice(-2)}`;
 
         // Get the count of histories for the current month to determine order number
         const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -43,7 +43,7 @@ export default factories.createCoreController(
         const user = ctx.state.user;
         const userName = user ? user.username : "Anonymous";
 
-        // Format the code with username in the center
+        // Format the code with username in the center and date in DDMMYY format
         const generatedCode = `${orderNumber} - ${userName} - ${dateFormatted} - 1 PAX`;
 
         const newHistory = await strapi.db.transaction(async (trx) => {
