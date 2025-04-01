@@ -39,12 +39,15 @@ export default factories.createCoreController(
         // Generate the order number (count + 1)
         const orderNumber = monthlyHistories + 1;
 
-        // Format the code
-        const generatedCode = `${orderNumber} - ${dateFormatted} - 1 PAX`;
+        // Get the logged-in user's name
+        const user = ctx.state.user;
+        const userName = user ? user.username : "Anonymous";
 
-        const newHistory = await strapi.db
-          .query("api::history.history")
-          .create({
+        // Format the code with username in the center
+        const generatedCode = `${orderNumber} - ${userName} - ${dateFormatted} - 1 PAX`;
+
+        const newHistory = await strapi.db.transaction(async (trx) => {
+          return await strapi.db.query("api::history.history").create({
             data: {
               code: generatedCode,
               history,
@@ -52,6 +55,7 @@ export default factories.createCoreController(
               users_permissions_user,
             },
           });
+        });
 
         // Return the created entity
         return { data: newHistory };
