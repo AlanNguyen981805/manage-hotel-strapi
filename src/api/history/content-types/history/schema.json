@@ -25,8 +25,12 @@
     "user_history": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::user-history.user-history",
-      "inversedBy": "history"
+      "target": "api::user-history.user-history"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

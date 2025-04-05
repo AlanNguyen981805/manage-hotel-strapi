@@ -14,12 +14,6 @@
     "location_name": {
       "type": "string"
     },
-    "companies": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::company.company",
-      "mappedBy": "location"
-    },
     "hotels": {
       "type": "relation",
       "relation": "oneToMany",
@@ -42,6 +36,11 @@
       "relation": "oneToMany",
       "target": "api::car.car",
       "mappedBy": "location"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
     }
   }
 }

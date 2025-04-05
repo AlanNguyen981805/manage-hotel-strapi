@@ -30,6 +30,9 @@
       "relation": "oneToOne",
       "target": "api::hotel.hotel",
       "inversedBy": "hotel_type"
+    },
+    "price_default": {
+      "type": "integer"
     }
   }
 }

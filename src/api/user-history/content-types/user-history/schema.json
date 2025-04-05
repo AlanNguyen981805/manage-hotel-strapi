@@ -20,12 +20,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::history.history"
-    },
-    "history": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::history.history",
-      "mappedBy": "user_history"
     }
   }
 }

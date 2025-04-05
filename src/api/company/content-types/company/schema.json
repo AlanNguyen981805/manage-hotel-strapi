@@ -22,16 +22,10 @@
     "company_desc": {
       "type": "string"
     },
-    "cars": {
+    "locations": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::car.car"
-    },
-    "location": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::location.location",
-      "inversedBy": "companies"
+      "target": "api::location.location"
     },
     "service_companies": {
       "type": "relation",

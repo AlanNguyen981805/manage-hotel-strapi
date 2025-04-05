@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "venders",
+  "info": {
+    "singularName": "vender",
+    "pluralName": "venders",
+    "displayName": "Vender",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": true
+    },
+    "address": {
+      "type": "text"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    }
+  }
+}
