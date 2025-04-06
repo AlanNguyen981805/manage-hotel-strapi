@@ -16,9 +16,6 @@
       "unique": true,
       "required": true
     },
-    "desc": {
-      "type": "string"
-    },
     "name": {
       "type": "string"
     },
@@ -27,6 +24,12 @@
       "relation": "manyToOne",
       "target": "api::location.location",
       "inversedBy": "routes"
+    },
+    "desc": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }

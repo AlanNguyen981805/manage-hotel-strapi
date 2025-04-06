@@ -411,7 +411,6 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    cars: Schema.Attribute.Relation<'oneToMany', 'api::car.car'>;
     company_code: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -425,7 +424,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
       'api::company.company'
     > &
       Schema.Attribute.Private;
-    location: Schema.Attribute.Relation<'manyToOne', 'api::location.location'>;
+    locations: Schema.Attribute.Relation<'oneToMany', 'api::location.location'>;
     mark_up: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
     service_companies: Schema.Attribute.Relation<
@@ -472,6 +471,10 @@ export interface ApiHistoryHistory extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::user-history.user-history'
     >;
+    users_permissions_user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -498,6 +501,7 @@ export interface ApiHotelTypeHotelType extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
+    price_default: Schema.Attribute.Integer;
     price_hotel: Schema.Attribute.Relation<
       'oneToOne',
       'api::price-hotel.price-hotel'
@@ -567,7 +571,7 @@ export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
   };
   attributes: {
     cars: Schema.Attribute.Relation<'oneToMany', 'api::car.car'>;
-    companies: Schema.Attribute.Relation<'oneToMany', 'api::company.company'>;
+    company: Schema.Attribute.Relation<'oneToOne', 'api::company.company'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -645,7 +649,8 @@ export interface ApiRouteRoute extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    desc: Schema.Attribute.String;
+    desc: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::route.route'> &
       Schema.Attribute.Private;
@@ -739,7 +744,6 @@ export interface ApiUserHistoryUserHistory extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     histories: Schema.Attribute.Relation<'oneToMany', 'api::history.history'>;
-    history: Schema.Attribute.Relation<'oneToOne', 'api::history.history'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -749,6 +753,38 @@ export interface ApiUserHistoryUserHistory extends Struct.CollectionTypeSchema {
     name_user: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiVenderVender extends Struct.CollectionTypeSchema {
+  collectionName: 'venders';
+  info: {
+    description: '';
+    displayName: 'Vender';
+    pluralName: 'venders';
+    singularName: 'vender';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::vender.vender'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Unique;
+    phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1211,10 +1247,9 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
-    blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -1225,6 +1260,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    histories: Schema.Attribute.Relation<'oneToMany', 'api::history.history'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1276,6 +1312,7 @@ declare module '@strapi/strapi' {
       'api::service-company.service-company': ApiServiceCompanyServiceCompany;
       'api::service-route.service-route': ApiServiceRouteServiceRoute;
       'api::user-history.user-history': ApiUserHistoryUserHistory;
+      'api::vender.vender': ApiVenderVender;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
