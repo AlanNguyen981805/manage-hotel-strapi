@@ -1,7 +1,3 @@
-/**
- * history controller
- */
-
 import { factories } from "@strapi/strapi";
 
 export default factories.createCoreController(
@@ -10,14 +6,11 @@ export default factories.createCoreController(
     async create(ctx) {
       try {
         const { data } = ctx.request.body;
-        const { code, history, time_search, users_permissions_user } = data;
-        // Generate code in format: 237 - 250525 - 142 PAX (order number - start date - number of passengers)
+        const { history, time_search, users_permissions_user } = data;
 
-        // Get current date in DDMMYY format
         const today = new Date();
         const dateFormatted = `${today.getDate().toString().padStart(2, "0")}${(today.getMonth() + 1).toString().padStart(2, "0")}${today.getFullYear().toString().slice(-2)}`;
 
-        // Get the count of histories for the current month to determine order number
         const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
         const endOfMonth = new Date(
           today.getFullYear(),
@@ -25,39 +18,51 @@ export default factories.createCoreController(
           0
         );
 
-        const monthlyHistories = await strapi.db
+        // Get the latest history for the current month to determine the next order number
+        const latestHistories = await strapi.db
           .query("api::history.history")
-          .count({
+          .findMany({
             where: {
               createdAt: {
                 $gte: startOfMonth,
                 $lte: endOfMonth,
               },
             },
+            orderBy: { createdAt: "desc" },
+            limit: 1,
           });
 
-        // Generate the order number (count + 1)
-        const orderNumber = monthlyHistories + 1;
+        // Determine the next order number
+        // Reset orderNumber to 1 at the beginning of each month and increment gradually
+        let orderNumber = 1;
+        if (latestHistories.length > 0) {
+          // Extract the order number from the code if available
+          const latestCode = latestHistories[0].code;
+          if (latestCode) {
+            const match = latestCode.match(/^(\d+)/);
+            if (match && match[1]) {
+              orderNumber = parseInt(match[1], 10) + 1;
+            }
+          }
+        }
 
-        // Get the logged-in user's name
         const user = ctx.state.user;
         const userName = user ? user.username : "Anonymous";
 
-        // Format the code with username in the center and date in DDMMYY format
         const generatedCode = `${orderNumber} - ${userName} - ${dateFormatted} - 1 PAX`;
 
-        const newHistory = await strapi.db.transaction(async (trx) => {
-          return await strapi.db.query("api::history.history").create({
+        const newHistory = await strapi.entityService.create(
+          "api::history.history",
+          {
             data: {
               code: generatedCode,
               history,
               time_search,
               users_permissions_user,
             },
-          });
-        });
+          }
+        );
 
-        // Return the created entity
         return { data: newHistory };
       } catch (error) {
         ctx.body = error;
