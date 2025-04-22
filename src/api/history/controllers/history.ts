@@ -6,7 +6,8 @@ export default factories.createCoreController(
     async create(ctx) {
       try {
         const { data } = ctx.request.body;
-        const { history, time_search, users_permissions_user } = data;
+        const { history, time_search, users_permissions_user, pax } = data;
+        console.log("history :>> ", history);
 
         const today = new Date();
         const dateFormatted = `${today.getDate().toString().padStart(2, "0")}${(today.getMonth() + 1).toString().padStart(2, "0")}${today.getFullYear().toString().slice(-2)}`;
@@ -49,8 +50,6 @@ export default factories.createCoreController(
         const user = ctx.state.user;
         const userName = user ? user.username : "Anonymous";
 
-        const pax = history.numberOfPeople;
-
         const generatedCode = `${orderNumber} - ${userName} - ${dateFormatted} - ${pax} PAX`;
 
         const newHistory = await strapi.entityService.create(
@@ -61,6 +60,7 @@ export default factories.createCoreController(
               history,
               time_search,
               users_permissions_user,
+              pax,
             },
           }
         );
