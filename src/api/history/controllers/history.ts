@@ -49,7 +49,9 @@ export default factories.createCoreController(
         const user = ctx.state.user;
         const userName = user ? user.username : "Anonymous";
 
-        const generatedCode = `${orderNumber} - ${userName} - ${dateFormatted} - 1 PAX`;
+        const pax = history.numberOfPeople;
+
+        const generatedCode = `${orderNumber} - ${userName} - ${dateFormatted} - ${pax} PAX`;
 
         const newHistory = await strapi.entityService.create(
           "api::history.history",
