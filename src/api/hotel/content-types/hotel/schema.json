@@ -11,14 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "hotel_code": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
-    "room_price": {
-      "type": "decimal"
-    },
     "extra_price": {
       "type": "decimal"
     },
@@ -27,22 +19,23 @@
       "required": true,
       "unique": false
     },
-    "expire_date": {
-      "type": "date"
-    },
     "rank": {
       "type": "integer"
     },
     "hotel_types": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::hotel-type.hotel-type"
-    },
-    "hotel_type": {
-      "type": "relation",
-      "relation": "oneToOne",
       "target": "api::hotel-type.hotel-type",
       "mappedBy": "hotel"
+    },
+    "desc_relation": {
+      "type": "string"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "hotels"
     }
   }
 }

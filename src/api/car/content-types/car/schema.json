@@ -4,7 +4,7 @@
   "info": {
     "singularName": "car",
     "pluralName": "cars",
-    "displayName": "car",
+    "displayName": "Car",
     "description": ""
   },
   "options": {
@@ -15,21 +15,20 @@
       "type": "string",
       "required": true
     },
-    "car_price": {
-      "type": "decimal"
-    },
-    "car_code": {
-      "type": "string",
-      "required": true
-    },
-    "id_car": {
-      "type": "uid"
-    },
     "location": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::location.location",
       "inversedBy": "cars"
+    },
+    "transportation_prices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::transportation-price.transportation-price",
+      "mappedBy": "car"
+    },
+    "desc_relation": {
+      "type": "string"
     }
   }
 }

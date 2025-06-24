@@ -4,7 +4,7 @@
   "info": {
     "singularName": "service-company",
     "pluralName": "service-companies",
-    "displayName": "service-company",
+    "displayName": "service-company1",
     "description": ""
   },
   "options": {
@@ -20,6 +20,15 @@
     },
     "service_price": {
       "type": "decimal"
+    },
+    "desc_relation": {
+      "type": "string"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "service_companies"
     }
   }
 }

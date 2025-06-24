@@ -25,11 +25,14 @@
       "required": true,
       "unique": false
     },
-    "hotel_type": {
+    "desc_relation": {
+      "type": "string"
+    },
+    "hotel_types": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::hotel-type.hotel-type",
-      "inversedBy": "price_hotel"
+      "inversedBy": "price_hotels"
     }
   }
 }

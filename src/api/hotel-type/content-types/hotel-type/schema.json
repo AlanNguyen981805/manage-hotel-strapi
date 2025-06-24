@@ -17,22 +17,20 @@
     "price_hotels": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::price-hotel.price-hotel"
-    },
-    "price_hotel": {
-      "type": "relation",
-      "relation": "oneToOne",
       "target": "api::price-hotel.price-hotel",
-      "mappedBy": "hotel_type"
-    },
-    "hotel": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::hotel.hotel",
-      "inversedBy": "hotel_type"
+      "mappedBy": "hotel_types"
     },
     "price_default": {
       "type": "integer"
+    },
+    "desc_relation": {
+      "type": "string"
+    },
+    "hotel": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::hotel.hotel",
+      "inversedBy": "hotel_types"
     }
   }
 }

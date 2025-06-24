@@ -23,6 +23,12 @@
     },
     "email": {
       "type": "email"
+    },
+    "desc_relation": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
     }
   }
 }

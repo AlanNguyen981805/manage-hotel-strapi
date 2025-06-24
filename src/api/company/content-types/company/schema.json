@@ -16,9 +16,6 @@
       "required": true,
       "unique": true
     },
-    "mark_up": {
-      "type": "decimal"
-    },
     "company_desc": {
       "type": "string"
     },
@@ -30,7 +27,26 @@
     "service_companies": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::service-company.service-company"
+      "target": "api::service-company.service-company",
+      "mappedBy": "company"
+    },
+    "mark_hotel": {
+      "type": "decimal"
+    },
+    "mark_tranfer": {
+      "type": "decimal"
+    },
+    "mark_service_com": {
+      "type": "decimal"
+    },
+    "desc_relation": {
+      "type": "string"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "company"
     }
   }
 }

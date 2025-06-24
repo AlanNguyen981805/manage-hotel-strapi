@@ -65,10 +65,16 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "histories": {
+    "companies": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::history.history"
+      "target": "api::company.company"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "users"
     }
   }
 }

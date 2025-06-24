@@ -26,6 +26,9 @@
       "relation": "manyToOne",
       "target": "api::location.location",
       "inversedBy": "service_routes"
+    },
+    "desc_relation": {
+      "type": "string"
     }
   }
 }

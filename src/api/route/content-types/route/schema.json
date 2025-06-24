@@ -11,11 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "code": {
-      "type": "string",
-      "unique": true,
-      "required": true
-    },
     "name": {
       "type": "string"
     },
@@ -25,11 +20,22 @@
       "target": "api::location.location",
       "inversedBy": "routes"
     },
-    "desc": {
-      "type": "text"
-    },
     "description": {
       "type": "richtext"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "desc_relation": {
+      "type": "string"
     }
   }
 }

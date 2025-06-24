@@ -17,7 +17,8 @@
     "hotels": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::hotel.hotel"
+      "target": "api::hotel.hotel",
+      "mappedBy": "location"
     },
     "routes": {
       "type": "relation",
@@ -41,6 +42,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::company.company"
+    },
+    "desc_relation": {
+      "type": "string"
     }
   }
 }

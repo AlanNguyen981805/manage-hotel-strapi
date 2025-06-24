@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transportation_prices",
+  "info": {
+    "singularName": "transportation-price",
+    "pluralName": "transportation-prices",
+    "displayName": "transportation-price",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "price": {
+      "type": "biginteger"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "car": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::car.car",
+      "inversedBy": "transportation_prices"
+    },
+    "desc_relation": {
+      "type": "string"
+    }
+  }
+}
